@@ -16,5 +16,8 @@ export const config: ScullyConfig = {
       }
     },
   },
-  puppeteerLaunchOptions: {executablePath: '/snap/bin/chromium'}
+  puppeteerLaunchOptions: {
+    args: ['--no-sandbox', '--disable-setuid--sandbox'],
+    executablePath: '/snap/bin/chromium'
+  }
 };
