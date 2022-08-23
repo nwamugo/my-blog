@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  AWS_LAMBDA_FUNCTION_NAME: true
 };
