@@ -4,10 +4,23 @@ import { ScullyConfig } from '@scullyio/scully';
 import '@scullyio/scully-plugin-puppeteer'
 
 const chromium = require('chrome-aws-lambda');
-let options;
+let configuration = {
+  projectRoot: "./src",
+  projectName: "my-blog",
+  // add spsModulePath when using de Scully Platform Server,
+  outDir: './dist/static',
+  routes: {
+    '/posts/:id': {
+      type: 'contentFolder',
+      id: {
+        folder: "./mdfiles"
+      }
+    },
+  }
+}
 
-(async function setLaunchOptions() {
-  options = process.env['production']
+const setConfiguration = async function() {
+  const options = process.env['AWS_LAMBDA_FUNCTION_NAME']
     ? {
         args: chromium.args,
         executablePath: await chromium.executablePath,
@@ -22,21 +35,26 @@ let options;
             ? '/usr/bin/google-chrome'
             : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
       };
-  return options;
-})();
 
-export const config: ScullyConfig = {
-  projectRoot: "./src",
-  projectName: "my-blog",
-  // add spsModulePath when using de Scully Platform Server,
-  outDir: './dist/static',
-  routes: {
-    '/posts/:id': {
-      type: 'contentFolder',
-      id: {
-        folder: "./mdfiles"
-      }
+  const configObj = {
+    projectRoot: "./src",
+    projectName: "my-blog",
+    // add spsModulePath when using de Scully Platform Server,
+    outDir: './dist/static',
+    routes: {
+      '/posts/:id': {
+        type: 'contentFolder',
+        id: {
+          folder: "./mdfiles"
+        }
+      },
     },
-  },
-  puppeteerLaunchOptions: options
+    puppeteerLaunchOptions: options
+  };
+
+  return configObj;
 };
+
+setConfiguration().then(result => configuration = result);
+
+export const config: ScullyConfig = configuration;
