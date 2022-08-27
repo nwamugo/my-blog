@@ -116,6 +116,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "my-blog:build:production",
+            "firebaseProject": "musings-nwamugo",
+            "firebaseHostingSite": "musings-nwamugo"
+          }
         }
       }
     }

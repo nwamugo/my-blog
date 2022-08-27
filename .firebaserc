@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "musings-nwamugo": {
+      "hosting": {
+        "my-blog": [
+          "musings-nwamugo"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "musings-nwamugo"
+  }
+}
